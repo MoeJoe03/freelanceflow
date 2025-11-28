@@ -63,7 +63,7 @@ export function StatCard({ title, value, trend, icon, color, onPress }: StatCard
       <View style={[styles.iconContainer, { backgroundColor: iconColor + "15" }]}>
         <Feather name={icon} size={20} color={iconColor} />
       </View>
-      <ThemedText type="h1" style={styles.value}>
+      <ThemedText type="h1" style={[styles.value, { color: iconColor }]}>
         {value}
       </ThemedText>
       <ThemedText type="small" style={[styles.title, { color: theme.textSecondary }]}>
