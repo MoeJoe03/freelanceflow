@@ -67,12 +67,6 @@ export default function DashboardScreen() {
       .slice(0, 3);
   }, [projects]);
 
-  const completedProjects = useMemo(() => {
-    return projects
-      .filter((p) => p.column === "completed")
-      .slice(0, 3);
-  }, [projects]);
-
   const handleAddBid = () => {
     if (newBidClient.trim() && newBidAmount.trim()) {
       addBid({
@@ -190,55 +184,6 @@ export default function DashboardScreen() {
                 style={{ color: theme.textSecondary, textAlign: "center" }}
               >
                 No active projects. Add a project to get started.
-              </ThemedText>
-            </View>
-          )}
-        </View>
-
-        <View style={styles.section}>
-          <ThemedText type="h3" style={styles.sectionTitle}>
-            Completed Projects
-          </ThemedText>
-          {completedProjects.length > 0 ? (
-            completedProjects.map((project) => (
-              <View
-                key={project.id}
-                style={[
-                  styles.projectItem,
-                  { backgroundColor: theme.backgroundDefault },
-                ]}
-              >
-                <View style={styles.projectInfo}>
-                  <ThemedText type="h4" numberOfLines={1}>
-                    {project.title}
-                  </ThemedText>
-                  <ThemedText
-                    type="small"
-                    style={{ color: theme.textSecondary }}
-                  >
-                    {project.clientName}
-                  </ThemedText>
-                </View>
-                <ThemedText
-                  type="small"
-                  style={{ color: "#21b15a", fontWeight: "600" }}
-                >
-                  ${project.revenue.toLocaleString()}
-                </ThemedText>
-              </View>
-            ))
-          ) : (
-            <View
-              style={[
-                styles.emptyState,
-                { backgroundColor: theme.backgroundDefault },
-              ]}
-            >
-              <ThemedText
-                type="small"
-                style={{ color: theme.textSecondary, textAlign: "center" }}
-              >
-                No completed projects yet.
               </ThemedText>
             </View>
           )}
