@@ -5,6 +5,7 @@ export type KanbanColumn = "todo" | "in_progress" | "waiting" | "revisions" | "r
 export type SnippetCategory = "intros" | "follow_ups" | "delivery" | "portfolio" | "quick_replies";
 export type TemplateCategory = "design" | "admin" | "real_estate" | "bpo" | "tutoring";
 export type AvailabilityStatus = "available" | "busy" | "unavailable";
+export type ExpenseCategory = "tools" | "software" | "outsourcing" | "marketing" | "equipment" | "other";
 
 export interface Bid {
   id: string;
@@ -61,6 +62,16 @@ export interface ProposalTemplate {
   template: string;
 }
 
+export interface Expense {
+  id: string;
+  projectId?: string;
+  projectTitle?: string;
+  amount: number;
+  category: ExpenseCategory;
+  date: string;
+  description: string;
+}
+
 export interface UserProfile {
   name: string;
   avatarIndex: number;
@@ -73,6 +84,7 @@ interface DataStore {
   developers: Developer[];
   snippets: Snippet[];
   templates: ProposalTemplate[];
+  expenses: Expense[];
   userProfile: UserProfile;
   addBid: (bid: Omit<Bid, "id">) => void;
   addClient: (client: Omit<Client, "id">) => void;
@@ -88,6 +100,9 @@ interface DataStore {
   addSnippet: (snippet: Omit<Snippet, "id">) => void;
   updateSnippet: (id: string, snippet: Partial<Snippet>) => void;
   deleteSnippet: (id: string) => void;
+  addExpense: (expense: Omit<Expense, "id">) => void;
+  updateExpense: (id: string, expense: Partial<Expense>) => void;
+  deleteExpense: (id: string) => void;
   updateUserProfile: (profile: Partial<UserProfile>) => void;
 }
 
@@ -144,6 +159,12 @@ const initialTemplates: ProposalTemplate[] = [
   { id: "5", category: "tutoring", name: "Online Tutoring", template: "Education is my passion! As an experienced tutor, I create personalized learning plans that adapt to each student's pace and style. Whether it's academic subjects, test prep, or skill development, I'm here to help achieve learning goals with patience and expertise." },
 ];
 
+const initialExpenses: Expense[] = [
+  { id: "1", amount: 99, category: "software", date: new Date().toISOString(), description: "Design software subscription" },
+  { id: "2", projectTitle: "Website Redesign", amount: 300, category: "outsourcing", date: new Date().toISOString(), description: "Freelancer for CSS optimization" },
+  { id: "3", amount: 50, category: "tools", date: new Date(Date.now() - 86400000 * 5).toISOString(), description: "Project management tool" },
+];
+
 export const useDataStore = create<DataStore>((set) => ({
   bids: initialBids,
   clients: initialClients,
@@ -151,6 +172,7 @@ export const useDataStore = create<DataStore>((set) => ({
   developers: initialDevelopers,
   snippets: initialSnippets,
   templates: initialTemplates,
+  expenses: initialExpenses,
   userProfile: { name: "Freelancer", avatarIndex: 0 },
 
   addBid: (bid) => set((state) => ({
@@ -207,6 +229,18 @@ export const useDataStore = create<DataStore>((set) => ({
 
   deleteSnippet: (id) => set((state) => ({
     snippets: state.snippets.filter((s) => s.id !== id),
+  })),
+
+  addExpense: (expense) => set((state) => ({
+    expenses: [...state.expenses, { ...expense, id: generateId() }],
+  })),
+
+  updateExpense: (id, updates) => set((state) => ({
+    expenses: state.expenses.map((e) => (e.id === id ? { ...e, ...updates } : e)),
+  })),
+
+  deleteExpense: (id) => set((state) => ({
+    expenses: state.expenses.filter((e) => e.id !== id),
   })),
 
   updateUserProfile: (profile) => set((state) => ({

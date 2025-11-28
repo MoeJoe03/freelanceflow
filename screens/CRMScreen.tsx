@@ -19,7 +19,7 @@ type DealStageSummary = {
 
 export default function CRMScreen() {
   const { theme } = useTheme();
-  const { clients, projects } = useDataStore();
+  const { clients, projects, expenses } = useDataStore();
 
   const crmMetrics = useMemo(() => {
     const dealStageLabels: Record<DealStage, string> = {
@@ -85,6 +85,12 @@ export default function CRMScreen() {
         ? Math.round((wonDealsValue / applicableDeals) * 100)
         : 0;
 
+    // Calculate total expenses
+    const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+
+    // Calculate profit (won deals revenue - expenses)
+    const totalProfit = wonDealsValue - totalExpenses;
+
     return {
       stageMetrics,
       pipelineValue,
@@ -92,8 +98,10 @@ export default function CRMScreen() {
       activeDeals,
       conversionRate,
       totalClients: clients.length,
+      totalExpenses,
+      totalProfit,
     };
-  }, [clients]);
+  }, [clients, expenses]);
 
   return (
     <View style={styles.container}>
@@ -109,30 +117,30 @@ export default function CRMScreen() {
         <View style={styles.statsGrid}>
           <View style={styles.statsRow}>
             <StatCard
-              title="Pipeline Value"
-              value={`$${crmMetrics.pipelineValue.toLocaleString()}`}
-              icon="trending-up"
-              color="#ffa554"
-            />
-            <StatCard
               title="Won Deals"
               value={`$${crmMetrics.wonDealsValue.toLocaleString()}`}
               icon="check-circle"
               color="#21b15a"
             />
+            <StatCard
+              title="Total Expenses"
+              value={`$${crmMetrics.totalExpenses.toLocaleString()}`}
+              icon="trending-down"
+              color="#ef4444"
+            />
           </View>
           <View style={styles.statsRow}>
             <StatCard
-              title="Active Deals"
-              value={crmMetrics.activeDeals}
-              icon="briefcase"
-              color="#16adc8"
+              title="Total Profit"
+              value={`$${crmMetrics.totalProfit.toLocaleString()}`}
+              icon="award"
+              color="#fbbf24"
             />
             <StatCard
-              title="Conversion Rate"
-              value={`${crmMetrics.conversionRate}%`}
-              icon="target"
-              color="#ffa554"
+              title="Profit Margin"
+              value={`${crmMetrics.wonDealsValue > 0 ? Math.round((crmMetrics.totalProfit / crmMetrics.wonDealsValue) * 100) : 0}%`}
+              icon="percent"
+              color="#16adc8"
             />
           </View>
         </View>
