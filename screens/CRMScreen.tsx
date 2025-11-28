@@ -112,8 +112,8 @@ export default function CRMScreen() {
     // Calculate profit (won deals revenue - expenses)
     const totalProfit = wonDealsValue - totalExpenses;
 
-    // Get recent projects (last 3)
-    const recentProjects = projects.slice().reverse().slice(0, 3).map((p) => {
+    // Get all projects with expense calculations
+    const allProjects = projects.slice().reverse().map((p) => {
       const projectExpenses = expenses.filter((e) => e.projectId === p.id);
       const projectExpenseTotal = projectExpenses.reduce((sum, e) => sum + e.amount, 0);
       const projectProfit = p.revenue - projectExpenseTotal;
@@ -134,7 +134,7 @@ export default function CRMScreen() {
       totalClients: clients.length,
       totalExpenses,
       totalProfit,
-      recentProjects,
+      allProjects,
     };
   }, [clients, expenses, projects]);
 
@@ -333,9 +333,9 @@ export default function CRMScreen() {
               <Feather name="plus" size={18} color="#FFFFFF" />
             </Pressable>
           </View>
-          {crmMetrics.recentProjects.length > 0 ? (
+          {crmMetrics.allProjects.length > 0 ? (
             <View>
-              {crmMetrics.recentProjects.map((project) => (
+              {crmMetrics.allProjects.map((project) => (
                 <View
                   key={project.id}
                   style={[
