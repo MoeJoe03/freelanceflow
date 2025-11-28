@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 
 import DrawerNavigator from "@/navigation/DrawerNavigator";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 export default function App() {
   return (
@@ -15,10 +16,13 @@ export default function App() {
       <SafeAreaProvider>
         <GestureHandlerRootView style={styles.root}>
           <KeyboardProvider>
-            <NavigationContainer>
-              <DrawerNavigator />
-            </NavigationContainer>
-            <StatusBar style="auto" />
+            <View style={styles.container}>
+              <AnimatedBackground />
+              <NavigationContainer>
+                <DrawerNavigator />
+              </NavigationContainer>
+            </View>
+            <StatusBar style="light" />
           </KeyboardProvider>
         </GestureHandlerRootView>
       </SafeAreaProvider>
@@ -28,6 +32,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
+  },
+  container: {
     flex: 1,
   },
 });
