@@ -91,13 +91,14 @@ export default function DrawerNavigator() {
           ? "rgba(129, 140, 248, 0.15)"
           : "rgba(99, 102, 241, 0.1)",
         drawerLabelStyle: {
-          marginLeft: -Spacing.lg,
+          marginLeft: Spacing.sm,
           fontSize: 16,
           fontWeight: "500",
         },
         drawerItemStyle: {
           borderRadius: BorderRadius.sm,
           marginHorizontal: Spacing.sm,
+          paddingVertical: Spacing.xs,
         },
         drawerStyle: {
           backgroundColor: theme.backgroundRoot,
@@ -109,8 +110,8 @@ export default function DrawerNavigator() {
         name="Dashboard"
         component={DashboardScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="home" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="home" size={24} color={color} />
           ),
         }}
       />
@@ -118,8 +119,8 @@ export default function DrawerNavigator() {
         name="Proposals"
         component={ProposalsScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="file-text" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="file-text" size={24} color={color} />
           ),
         }}
       />
@@ -127,8 +128,8 @@ export default function DrawerNavigator() {
         name="Projects"
         component={ProjectsScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="trello" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="trello" size={24} color={color} />
           ),
         }}
       />
@@ -136,8 +137,8 @@ export default function DrawerNavigator() {
         name="Clients"
         component={ClientsScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="users" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="users" size={24} color={color} />
           ),
         }}
       />
@@ -145,8 +146,8 @@ export default function DrawerNavigator() {
         name="Developers"
         component={DevelopersScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="code" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="code" size={24} color={color} />
           ),
         }}
       />
@@ -154,8 +155,8 @@ export default function DrawerNavigator() {
         name="Snippets"
         component={SnippetsScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="clipboard" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="clipboard" size={24} color={color} />
           ),
         }}
       />
@@ -163,8 +164,8 @@ export default function DrawerNavigator() {
         name="Settings"
         component={SettingsScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="settings" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="settings" size={24} color={color} />
           ),
         }}
       />
