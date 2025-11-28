@@ -318,7 +318,7 @@ export default function CRMScreen() {
         </View>
 
         {/* Project Logging */}
-        <View style={styles.section}>
+        <View style={[styles.section, styles.projectsSection]}>
           <View style={styles.sectionHeader}>
             <ThemedText type="h3" style={styles.sectionTitle}>
               Log Projects
@@ -333,109 +333,115 @@ export default function CRMScreen() {
               <Feather name="plus" size={18} color="#FFFFFF" />
             </Pressable>
           </View>
-          {crmMetrics.allProjects.length > 0 ? (
-            <View>
-              {crmMetrics.allProjects.map((project) => (
-                <View
-                  key={project.id}
-                  style={[
-                    styles.projectItem,
-                    { backgroundColor: theme.backgroundDefault },
-                  ]}
-                >
-                  <View style={styles.projectHeader}>
-                    <View style={{ flex: 1 }}>
-                      <ThemedText type="h4">{project.title}</ThemedText>
-                      <ThemedText
-                        type="small"
-                        style={{ color: theme.textSecondary }}
-                      >
-                        Revenue: ${project.revenue.toLocaleString()}
-                      </ThemedText>
-                    </View>
-                    <ThemedText
-                      type="h4"
-                      style={{
-                        color: project.profit >= 0 ? "#21b15a" : "#ef4444",
-                        fontWeight: "600",
-                      }}
-                    >
-                      ${project.profit.toLocaleString()}
-                    </ThemedText>
-                  </View>
-                  {project.expenseTotal > 0 && (
-                    <View style={styles.expenseInfo}>
-                      <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                        Expenses: ${project.expenseTotal.toLocaleString()}
-                      </ThemedText>
-                    </View>
-                  )}
-                  {project.expenses.map((expense) => (
-                    <Pressable
-                      key={expense.id}
-                      onPress={() => deleteExpense(expense.id)}
-                      style={[
-                        styles.projectExpenseItem,
-                        { backgroundColor: theme.backgroundRoot },
-                      ]}
-                    >
-                      <View
-                        style={[
-                          styles.expenseBadge,
-                          { backgroundColor: getCategoryColor(expense.category) },
-                        ]}
-                      >
-                        <Feather name="minus" size={10} color="#fff" />
-                      </View>
+          <ScrollView
+            style={styles.projectsContainer}
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled={true}
+          >
+            {crmMetrics.allProjects.length > 0 ? (
+              <View>
+                {crmMetrics.allProjects.map((project) => (
+                  <View
+                    key={project.id}
+                    style={[
+                      styles.projectItem,
+                      { backgroundColor: theme.backgroundDefault },
+                    ]}
+                  >
+                    <View style={styles.projectHeader}>
                       <View style={{ flex: 1 }}>
-                        <ThemedText type="small" numberOfLines={1}>
-                          {expense.description}
+                        <ThemedText type="h4">{project.title}</ThemedText>
+                        <ThemedText
+                          type="small"
+                          style={{ color: theme.textSecondary }}
+                        >
+                          Revenue: ${project.revenue.toLocaleString()}
                         </ThemedText>
                       </View>
                       <ThemedText
-                        type="small"
-                        style={{ color: "#ef4444", fontWeight: "600" }}
+                        type="h4"
+                        style={{
+                          color: project.profit >= 0 ? "#21b15a" : "#ef4444",
+                          fontWeight: "600",
+                        }}
                       >
-                        ${expense.amount.toLocaleString()}
+                        ${project.profit.toLocaleString()}
+                      </ThemedText>
+                    </View>
+                    {project.expenseTotal > 0 && (
+                      <View style={styles.expenseInfo}>
+                        <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                          Expenses: ${project.expenseTotal.toLocaleString()}
+                        </ThemedText>
+                      </View>
+                    )}
+                    {project.expenses.map((expense) => (
+                      <Pressable
+                        key={expense.id}
+                        onPress={() => deleteExpense(expense.id)}
+                        style={[
+                          styles.projectExpenseItem,
+                          { backgroundColor: theme.backgroundRoot },
+                        ]}
+                      >
+                        <View
+                          style={[
+                            styles.expenseBadge,
+                            { backgroundColor: getCategoryColor(expense.category) },
+                          ]}
+                        >
+                          <Feather name="minus" size={10} color="#fff" />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                          <ThemedText type="small" numberOfLines={1}>
+                            {expense.description}
+                          </ThemedText>
+                        </View>
+                        <ThemedText
+                          type="small"
+                          style={{ color: "#ef4444", fontWeight: "600" }}
+                        >
+                          ${expense.amount.toLocaleString()}
+                        </ThemedText>
+                      </Pressable>
+                    ))}
+                    <Pressable
+                      onPress={() => {
+                        setSelectedProjectId(project.id);
+                        setExpenseModalVisible(true);
+                      }}
+                      style={[
+                        styles.addExpenseButton,
+                        { borderColor: theme.primary },
+                      ]}
+                    >
+                      <Feather name="plus" size={14} color={theme.primary} />
+                      <ThemedText
+                        type="small"
+                        style={{ color: theme.primary, marginLeft: Spacing.sm }}
+                      >
+                        Add Expense
                       </ThemedText>
                     </Pressable>
-                  ))}
-                  <Pressable
-                    onPress={() => {
-                      setSelectedProjectId(project.id);
-                      setExpenseModalVisible(true);
-                    }}
-                    style={[
-                      styles.addExpenseButton,
-                      { borderColor: theme.primary },
-                    ]}
-                  >
-                    <Feather name="plus" size={14} color={theme.primary} />
-                    <ThemedText
-                      type="small"
-                      style={{ color: theme.primary, marginLeft: Spacing.sm }}
-                    >
-                      Add Expense
-                    </ThemedText>
-                  </Pressable>
-                </View>
-              ))}
-            </View>
-          ) : (
-            <View
-              style={[
-                styles.emptyExpenses,
-                { backgroundColor: theme.backgroundDefault },
-              ]}
-            >
-              <ThemedText
-                type="small"
-                style={{ color: theme.textSecondary, textAlign: "center" }}
+                  </View>
+                ))}
+              </View>
+            ) : (
+              <View
+                style={[
+                  styles.emptyExpenses,
+                  { backgroundColor: theme.backgroundDefault },
+                ]}
               >
-                No projects logged yet
-              </ThemedText>
-            </View>
-          )}
+                <ThemedText
+                  type="small"
+                  style={{ color: theme.textSecondary, textAlign: "center" }}
+                >
+                  No projects logged yet
+                </ThemedText>
+              </View>
+            )}
+          </ScrollView>
         </View>
       </ScreenScrollView>
 
@@ -644,5 +650,12 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
     borderWidth: 1,
     marginTop: Spacing.md,
+  },
+  projectsSection: {
+    flex: 0,
+    height: 400,
+  },
+  projectsContainer: {
+    flex: 1,
   },
 });
