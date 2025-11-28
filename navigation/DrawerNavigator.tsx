@@ -14,6 +14,7 @@ import DashboardScreen from "@/screens/DashboardScreen";
 import ProposalsScreen from "@/screens/ProposalsScreen";
 import ProjectsScreen from "@/screens/ProjectsScreen";
 import ClientsScreen from "@/screens/ClientsScreen";
+import CRMScreen from "@/screens/CRMScreen";
 import DevelopersScreen from "@/screens/DevelopersScreen";
 import SnippetsScreen from "@/screens/SnippetsScreen";
 import SettingsScreen from "@/screens/SettingsScreen";
@@ -26,6 +27,7 @@ export type DrawerParamList = {
   Proposals: undefined;
   Projects: undefined;
   Clients: undefined;
+  CRM: undefined;
   Developers: undefined;
   Snippets: undefined;
   Settings: undefined;
@@ -139,6 +141,15 @@ export default function DrawerNavigator() {
         options={{
           drawerIcon: ({ color }) => (
             <Feather name="users" size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="CRM"
+        component={CRMScreen}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Feather name="pie-chart" size={24} color={color} />
           ),
         }}
       />
