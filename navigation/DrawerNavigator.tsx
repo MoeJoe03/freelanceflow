@@ -39,6 +39,7 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
 
   return (
     <DrawerContentScrollView
@@ -49,7 +50,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       ]}
     >
       <View style={styles.header}>
-        <ThemedText type="h2" style={styles.appName}>
+        <ThemedText type="h2" style={[styles.appName, { color: theme.primary }]}>
           BarakahOps
         </ThemedText>
       </View>
