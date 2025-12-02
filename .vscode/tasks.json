@@ -203,6 +203,20 @@
 			"command": "npm run pwa",
 			"isBackground": false,
 			"group": "build"
+		},
+		{
+			"label": "Build PWA Check",
+			"type": "shell",
+			"command": "npm run pwa 2>&1 | tail -20",
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Build PWA",
+			"type": "shell",
+			"command": "npm run pwa",
+			"isBackground": false,
+			"group": "build"
 		}
 	]
 }
