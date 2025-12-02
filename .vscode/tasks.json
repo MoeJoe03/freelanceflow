@@ -217,6 +217,13 @@
 			"command": "npm run pwa",
 			"isBackground": false,
 			"group": "build"
+		},
+		{
+			"label": "Build PWA Test",
+			"type": "shell",
+			"command": "npm run pwa",
+			"isBackground": false,
+			"group": "build"
 		}
 	]
 }

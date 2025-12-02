@@ -10,15 +10,10 @@ import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 import { useDataStore } from "@/store/dataStore";
 
-// Import avatars directly to ensure they're bundled
-import avatarGeometric from "../assets/images/avatars/avatar-geometric.png";
-import avatarWorkspace from "../assets/images/avatars/avatar-workspace.png";
-import avatarDeveloper from "../assets/images/avatars/avatar-developer.png";
-
 const avatarImages = [
-  avatarGeometric,
-  avatarWorkspace,
-  avatarDeveloper,
+  { uri: require("../assets/images/avatars/avatar-geometric.png") },
+  { uri: require("../assets/images/avatars/avatar-workspace.png") },
+  { uri: require("../assets/images/avatars/avatar-developer.png") },
 ];
 
 export default function SettingsScreen() {
